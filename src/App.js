@@ -16,6 +16,7 @@ function App() {
           setCount={setCount}
         />
         <Message count={count} />
+        <ResetBtn count={count} setCount={setCount} setStep={setStep} />
       </div>
       <div>
         <footer>Joaquin Del Vecchio</footer>
@@ -80,4 +81,17 @@ const StepsBar = ({ step, setStep }) => {
       10 ({step})
     </div>
   );
+};
+
+const ResetBtn = ({ count, setCount, setStep }) => {
+  const handleReset = () => {
+    setCount(0);
+    setStep(1);
+  };
+  if (count !== 0)
+    return (
+      <button className="resetBtn" onClick={handleReset}>
+        Reset
+      </button>
+    );
 };
