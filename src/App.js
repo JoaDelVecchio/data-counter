@@ -1,4 +1,5 @@
 import { useState } from "react";
+export default App;
 
 function App() {
   const [step, setStep] = useState(1);
@@ -17,24 +18,17 @@ function App() {
 }
 
 const Counter = ({ step, setStep, count, setCount }) => {
-  const incrementStep = () => setStep((s) => s + 1);
-  const decrementStep = () => setStep((s) => s - 1);
   const incrementCount = () => setCount((s) => s + step);
   const decrementCount = () => setCount((s) => s - step);
 
   return (
     <div>
-      <Buttons
-        text="step"
-        decrement={decrementStep}
-        increment={incrementStep}
-        variableToShow={step}
-      />
-      <Buttons
-        text="count"
+      <StepsBar step={step} setStep={setStep} />
+      <CounterBar
         decrement={decrementCount}
         increment={incrementCount}
         variableToShow={count}
+        setCount={setCount}
       />
     </div>
   );
@@ -55,17 +49,38 @@ const Message = ({ count }) => {
   );
 };
 
-export default App;
-
-const Buttons = ({ text, decrement, increment, variableToShow }) => {
+const CounterBar = ({ text, decrement, increment, counter, setCount }) => {
+  const handleCounter = (e) => {
+    setCount(Number(e.target.value));
+  };
   return (
     <div>
       <button onClick={() => decrement()}>-</button>
       <span>
-        {text}
-        {variableToShow}
+        <input type="number" value={counter} onChange={handleCounter} />
       </span>
       <button onClick={() => increment()}>+</button>
+    </div>
+  );
+};
+
+const StepsBar = ({ step, setStep }) => {
+  const handleStep = (e) => {
+    setStep(Number(e.target.value));
+  };
+  return (
+    <div>
+      <div>
+        0
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={step}
+          onChange={handleStep}
+        />
+        10 ({step})
+      </div>
     </div>
   );
 };
